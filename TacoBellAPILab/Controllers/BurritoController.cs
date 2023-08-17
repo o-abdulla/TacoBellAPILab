@@ -19,20 +19,20 @@ namespace TacoBellAPILab.Controllers
             return dbContext.Burritos.ToList();
         }
 
-        // api/Burrito/1
-        [HttpGet("{Id}")]
-        public Burrito GetById(int Id)
+        //api/Burrito/Beans?HasBeans=true
+        [HttpGet("Beans")]
+        public List<Burrito> GetByBeans(bool HasBeans)
         {
-            return dbContext.Burritos.FirstOrDefault(b => b.Id == Id);
+            return dbContext.Burritos.Where(b => b.Bean == HasBeans).ToList();
         }
 
         // api/Burrito?name=Beefy 5 Layer
         [HttpPost]
-        public Burrito AddBurrito(string name, float price, bool beans)
+        public Burrito AddBurrito(string name, float cost, bool beans)
         {
             Burrito newBurrito = new Burrito();
             newBurrito.Name = name;
-            newBurrito.Cost = price;
+            newBurrito.Cost = cost;
             newBurrito.Bean = beans;
             dbContext.Burritos.Add(newBurrito);
             dbContext.SaveChanges();
